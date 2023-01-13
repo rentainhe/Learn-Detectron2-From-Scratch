@@ -2,6 +2,7 @@
 Detectron2 Learning Notes Sharing
 
 ## TODO
+- [x] `YACS` and `LazyConfig`
 - [ ] `MetadataCatelog` and `DatasetCatelog`
 - [ ] `Register` and `Configurable`
 
