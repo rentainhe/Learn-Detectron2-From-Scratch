@@ -1,11 +1,12 @@
 ## Registry：通过注册机制优雅地调用代码中的不同组件
 
-本文是关于detectron2下yacs配置系统的一个拓展文章，也是我们CVR团队在开发transformer-based的目标检测框架detrex时学习和积累的经验。我们希望通过几个实际应用的场景，对detectron2下**yacs配置系统**所搭配的一些使用作进一步地介绍。以下是本文的目录, 大家可以选择性地阅读自己想看的章节, 也可以按照顺序阅读：
+本文是关于detectron2下yacs配置系统的一个拓展文章，也是我们CVR团队在开发transformer-based的目标检测框架detrex时学习和积累的经验。我们希望通过几个实际应用的场景，对detectron2下**yacs配置系统**所搭配的一些使用作进一步地介绍。
 
 - detrex开源代码: https://github.com/IDEA-Research/detrex
 - detectron2文章合集: https://github.com/rentainhe/Learn-Detectron2-From-Scratch
 
 ## Contents
+以下是本文的目录, 大家可以选择性地阅读自己想看的章节, 也可以按照顺序阅读：
 - [Registry：通过注册机制优雅地调用代码中的不同组件](#registry通过注册机制优雅地调用代码中的不同组件)
 - [Contents](#contents)
   - [注册机制的简单介绍](#注册机制的简单介绍)
