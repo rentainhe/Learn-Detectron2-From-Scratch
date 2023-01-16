@@ -4,7 +4,9 @@ Detectron2 Learning Notes Sharing
 ## TODO
 - [x] `YACS` and `LazyConfig`
 - [ ] `MetadataCatelog` and `DatasetCatelog`
-- [ ] `Register` and `Configurable`
+- [x] `Register`
+- [ ] `Configurable`
 
 ## Contents
-- [Config System Learning: YACS vs LazyConfig](./notes/IDEA_CVR_blog_config.md)
+- [Config System Learning: YACS vs LazyConfig (Detectron2的配置系统简介)](./notes/IDEA_CVR_blog_config.md)
+- [Registry: How to elegantly control core code](./notes/Registry_Configurable.md)
