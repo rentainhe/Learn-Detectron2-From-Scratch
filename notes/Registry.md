@@ -1,6 +1,6 @@
 ## Registry：通过注册机制优雅地调用代码中的不同组件
 
-本文是关于detectron2下yacs配置系统的一个拓展文章，同样希望通过几个实际应用的场景，对detectron2下**yacs配置系统**所搭配的一些使用作进一步地介绍，以下是本文的目录, 大家可以选择性地阅读自己想看的章节, 也可以按照顺序阅读：
+本文是关于detectron2下yacs配置系统的一个拓展文章，也是我们CVR团队在开发transformer-based的目标检测框架detrex时学习和积累的经验。我们希望通过几个实际应用的场景，对detectron2下**yacs配置系统**所搭配的一些使用作进一步地介绍。以下是本文的目录, 大家可以选择性地阅读自己想看的章节, 也可以按照顺序阅读：
 
 ## Contents
 - [Registry：通过注册机制优雅地调用代码中的不同组件](#registry通过注册机制优雅地调用代码中的不同组件)
@@ -21,7 +21,7 @@
 
 ### 为什么我们需要注册机制？
 
-要理解这个问题，首先我们要知道字典形式会给我们带来什么好处，我们先设想一个应用场景，我们希望使用config中的某个key，来控制调用的模型，一个最naive的实现是，将我们core code下实现的所有模型，写入一个build函数里，并且通过config判断调用的是哪个模型，一个简单的伪代码如下:
+要理解这个问题，首先我们要知道字典形式会给我们带来什么好处。我们先设想一个应用场景，我们希望使用config中的某个key，来控制调用的模型。一个最naive的实现是，将我们core code下实现的所有模型，写入一个build函数里，并且通过config判断调用的是哪个模型。一个简单的伪代码如下:
 ```python
 from model import RetinaNet, FCOS
 
@@ -42,7 +42,7 @@ cfg.MODEL.NAME = "retinanet"
 model = build_model(cfg)
 ```
 
-这样的实现很简单直观，但是**拓展性太差**，举个例子，当用户希望通过config控制自己新构建一个新的模型的时候，需要hack的部分很多：
+这样的实现很简单直观，但是**拓展性太差**。举个例子，当用户希望通过config控制自己新构建一个新的模型的时候，需要hack的部分很多：
 ```python
 from model import RetinaNet, FCOS
 
@@ -67,7 +67,7 @@ def build_model(cfg):
 - **可以方便地logging这个字典中已经存在的模型**
 - **可以方便地添加模型到字典中**
 
-如果我们存在这样的一个**字典(model-factory)**，那么我们调用模型的流程就会得到极大的简化，一个简单的伪代码如下：
+如果我们有这样一个专门用于存放定义好的模型的**字典(model-factory)**，那么我们调用模型的流程就会得到极大的简化，一个简单的伪代码如下：
 ```python
 from model import model_factory
 
@@ -133,9 +133,9 @@ class Registry(object):
         return "Registry of {}:\n".format(self._name) + table
 ```
 我们通过定义`Registry`类，实现了以下几个对应的功能：
-- 在初始化时可以通过显示传入`name`参数，对我们这个`factory`命名
+- 在初始化时可以通过显式传入`name`参数，对我们这个`factory`命名
 - 通过实现`register`函数，可以将用户定义的新模型注册到我们定义好的`Registry`类中
-- 通过`get`函数传入`object name`来调用得到对应的`object`
+- 通过调用`get`函数并传入`object name`来调用得到对应的`object`
 - 最后通过自定义`__repr__`函数美化一下我们的输出结果，并且可以**List**出我们已经注册好的所有模块
 
 在定义好`Registry`类后，我们可以极其便捷地添加新定义好的模型，我们用`torchvision`下的模型举例:
@@ -171,7 +171,7 @@ print(preds.shape)
 ```
 
 ### Detectron2下注册机制的基本用法
-注册机制在很多优质项目中都实现过，包括mmcv，detectron2等，这边简单列举一下detectron2下注册机制的基本用法，对于其中一些python syntax的内容（例如装饰器等）我们后续会专门推出文章介绍相关的基础知识
+注册机制在很多优质项目中都实现过，包括`mmcv`，`detectron2`, `maskrcnn-benchmark`等。这边简单列举一下detectron2下注册机制的基本用法，对于其中一些python syntax的内容（例如装饰器等），我们后续会专门推出文章介绍相关的基础知识。
 
 #### 创建一个注册实例来存放相关的module
 ```python
@@ -242,7 +242,7 @@ preds = resnet18_model(img)
 ```
 
 ### Brief Summary
-灵活地使用注册机制可以**很方便地管理代码中的核心组件**，通过定义不同的Registry实例，来管理代码中的不同组件，例如我可以通过定义`OPTIM_FACTORY`, `DATASET_FACTORY`, `MODEL_FACTORY`来分别管理优化器，数据集以及模型。在后续的文章中我们会结合detectron2下的`configurable`组件更加深入介绍一下detectron2下的完整的模型调用流程。
+灵活地使用注册机制可以**很方便地管理代码中的核心组件**，通过定义不同的Registry实例，来管理代码中的不同组件，例如我们可以通过定义`OPTIM_FACTORY`, `DATASET_FACTORY`, `MODEL_FACTORY`来分别管理`优化器`，`数据集`以及`模型`。在后续的文章中我们会结合detectron2下的`configurable`组件更加深入介绍一下detectron2下是如何通过config操控具体模型实例化的。
 
 ## Reference
 - [fvcore.common.registry](https://github.com/facebookresearch/fvcore/blob/main/fvcore/common/registry.py)
