@@ -9,4 +9,4 @@ Detectron2 Learning Notes Sharing
 
 ## Contents
 - [Config System Learning: YACS vs LazyConfig (Detectron2的配置系统简介)](./notes/IDEA_CVR_blog_config.md)
-- [Registry: How to elegantly control core code](./notes/Registry_Configurable.md)
+- [Registry: How to elegantly control core code (使用注册机制控制核心代码组件)](./notes/Registry.md)
