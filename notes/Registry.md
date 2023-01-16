@@ -11,6 +11,7 @@
   - [Detectron2下注册机制的基本用法](#detectron2下注册机制的基本用法)
     - [创建一个注册实例来存放相关的module](#创建一个注册实例来存放相关的module)
     - [注册模型](#注册模型)
+    - [调用已注册好的模型](#调用已注册好的模型)
   - [Brief Summary](#brief-summary)
 - [Reference](#reference)
 
@@ -229,6 +230,15 @@ Registry of MODEL:
 ├──────────┼───────────────────────────────────────┤
 │ MyNet    │ <class '__main__.MyNet'>              │
 ╘══════════╧═══════════════════════════════════════╛
+```
+
+#### 调用已注册好的模型
+可以通过`Registry.get()`函数调用已注册的模型
+```python
+resnet18_model = MODEL_FACTORY.get("resnet18")(num_classes=10)
+
+img = torch.randn(1, 3, 224, 224)
+preds = resnet18_model(img)
 ```
 
 ### Brief Summary
